@@ -1,0 +1,42 @@
+{
+  "name": "cse341-team01-project",
+  "version": "1.0.0",
+  "description": "team01 project for CSE 341",
+  "keywords": [
+    "team",
+    "project",
+    "cse341",
+    "api",
+    "e-commerce"
+  ],
+  "homepage": "https://github.com/Sofia0831/cse341-team01-project#readme",
+  "bugs": {
+    "url": "https://github.com/Sofia0831/cse341-team01-project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sofia0831/cse341-team01-project.git"
+  },
+  "license": "ISC",
+  "author": "CSE341 Team01",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.2.1",
+    "mongodb": "^6.18.0",
+    "swagger-ui-express": "^5.0.1",
+    "validatorjs": "^3.22.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "swagger-autogen": "^2.23.7"
+  }
+}
