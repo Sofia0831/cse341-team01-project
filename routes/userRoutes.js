@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
-const { userValidationRules, validate } = require('../middleware/validation');
+const { userValidationRules, validate } = require('../middleware/validate');
 
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
