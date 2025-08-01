@@ -1,10 +1,30 @@
-const express = require ('express');
+require('dotenv').config();
+const express = require('express');
+const connectDB = require('./config/db');
+const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
+
 const app = express();
+app.use(express.json());
 
-const port = process.env.PORT || 3000;
+// Routes
+app.use('/auth', authRoutes);
+app.use('/products', productRoutes);
 
-app.use('/', require('./routes'))
+// Swagger
+const swaggerSpec = require('./config/swagger');
+const swaggerUi = require('swagger-ui-express');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.listen(port, () => {
-    console.log(`Running on port ${port}`)
+// Error handling
+app.use((err, req, res, next) => {
+  res.status(500).json({ error: err.message });
+});
+
+
+
+// Start server
+const PORT = process.env.PORT || 3000;
+connectDB().then(() => {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
