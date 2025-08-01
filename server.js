@@ -1,22 +1,32 @@
-require("dotenv").config();
+require('dotenv').config();
+const express = require('express');
+const connectDB = require('./config/db');
+const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
+const mainRoutes = require('./routes'); // from your original
 
-const express = require("express");
-const mongoose = require("mongoose");
+const swaggerSpec = require('./config/swagger');
+const swaggerUi = require('swagger-ui-express');
+
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost/ecb", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.error("MongoDB connection error:", err));
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use("/auth", require("./routes/authRoutes"));
-app.use("/", require("./routes"));
+// Routes
+app.use('/auth', authRoutes);
+app.use('/products', productRoutes);
+app.use('/', mainRoutes); // optional if your app needs it
 
-app.listen(port, () => {
-  console.log(`Running on port ${port}`);
+// Centralized Error Handler
+app.use((err, req, res, next) => {
+  res.status(500).json({ error: err.message });
+});
+
+// Start server
+connectDB().then(() => {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
