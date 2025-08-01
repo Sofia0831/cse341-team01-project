@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET || "yoursecretkey";
 
 exports.signup = async (req, res) => {
+  //#swagger.tags=["Authentication"]
   const { email, password, role } = req.body;
 
   try {
@@ -28,6 +29,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  //#swagger.tags=["Authentication"]
   const { email, password } = req.body;
 
   try {

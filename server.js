@@ -1,13 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
-const productRoutes = require('./routes/productRoutes');
-const userRoutes = require('./routes/userRoutes')
-const mainRoutes = require('./routes'); // from your original
 
-const swaggerSpec = require('./config/swagger');
-const swaggerUi = require('swagger-ui-express');
+const swaggerRoute = require("./routes/swagger");
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,12 +11,11 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/", swaggerRoute); 
 
 // Routes
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
-app.use('/users', userRoutes);
 app.use('/', mainRoutes); // optional if your app needs it
 
 // Centralized Error Handler

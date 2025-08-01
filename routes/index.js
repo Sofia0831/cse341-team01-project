@@ -1,9 +1,13 @@
+const router = require('express').Router();
 
-const express = require('express');
-const router = express.Router();
+router.use("/", require("./swagger"));
 
 router.get('/', (req, res) => {
-  res.json({ message: 'Hello world, this is our Team 01 project!' });
+  //#swagger.tags=["Test"]
+  res.send('Hello world, this is our Team 01 project!');
 });
+
+router.use("/auth", require("./authRoutes"));
+router.use("/products", require("./productRoutes"));
 
 module.exports = router;
