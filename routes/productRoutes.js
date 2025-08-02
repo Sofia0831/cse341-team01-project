@@ -4,19 +4,9 @@ const Product = require('../models/Product');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
-
-// @swagger
-// /products:
-//   get:
-//     summary: Get all products
-//     parameters:
-//       - in: query
-//         name: category
-//         schema: { type: string }
-//     responses:
-//       200: { description: "Array of products" }
 router.get('/', async (req, res) => {
   //#swagger.tags=["Products"]
+  //#swagger.summary="Get all products"
   try {
     const { category } = req.query;
     const filter = category ? { category } : {};
@@ -30,6 +20,7 @@ router.get('/', async (req, res) => {
 // Add POST/PUT/DELETE endpoints with admin checks
 router.post('/', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   //#swagger.tags=["Products"]
+  //#swagger.summary="Create a new product"
   try {
     const product = await Product.create(req.body);
     res.status(201).json(product);
@@ -40,6 +31,7 @@ router.post('/', authMiddleware, roleMiddleware('admin'), async (req, res) => {
 
 router.put('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   //#swagger.tags=["Products"]
+  //#swagger.summary="Update a product by ID"
   try {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json(product);
@@ -50,6 +42,7 @@ router.put('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => 
 
 router.delete('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   //#swagger.tags=["Products"]
+  //#swagger.summary="Delete a product by ID"
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.status(204).send();

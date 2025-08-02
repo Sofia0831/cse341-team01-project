@@ -5,9 +5,10 @@
     "description": "An API to perform CRUD operations to an E-Commerce MongoDB database.",
     "version": "1.0.0"
   },
-  "host": "cse341-team01-project.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
+    "http",
     "https"
   ],
   "paths": {
@@ -29,6 +30,7 @@
         "tags": [
           "Authentication"
         ],
+        "summary": "Register new user",
         "description": "",
         "parameters": [
           {
@@ -68,6 +70,7 @@
         "tags": [
           "Authentication"
         ],
+        "summary": "Login and receive a JWT token",
         "description": "",
         "parameters": [
           {
@@ -102,11 +105,50 @@
         }
       }
     },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Refresh and receive a new JWT token",
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout user (client should discard token)",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/products/": {
       "get": {
         "tags": [
           "Products"
         ],
+        "summary": "Get all products",
         "description": "",
         "parameters": [
           {
@@ -128,6 +170,7 @@
         "tags": [
           "Products"
         ],
+        "summary": "Create a new product",
         "description": "",
         "parameters": [
           {
@@ -157,6 +200,7 @@
         "tags": [
           "Products"
         ],
+        "summary": "Update a product by ID",
         "description": "",
         "parameters": [
           {
@@ -190,6 +234,7 @@
         "tags": [
           "Products"
         ],
+        "summary": "Delete a product by ID",
         "description": "",
         "parameters": [
           {
@@ -222,6 +267,10 @@
     },
     "/users/": {
       "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get all users",
         "description": "",
         "parameters": [
           {
@@ -246,6 +295,10 @@
         }
       },
       "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a new user",
         "description": "",
         "parameters": [
           {
@@ -285,6 +338,10 @@
     },
     "/users/{id}": {
       "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a user by ID",
         "description": "",
         "parameters": [
           {
@@ -339,6 +396,10 @@
         }
       },
       "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a user by ID",
         "description": "",
         "parameters": [
           {

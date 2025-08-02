@@ -8,8 +8,9 @@ const { userValidationRules, validate } = require('../middleware/validate');
 const authMiddleware = require('../middleware/authMiddleware');
 const roleMiddleware = require('../middleware/roleMiddleware');
 
-
 router.get('/', authMiddleware, roleMiddleware('admin'), async (req, res) => {
+  //#swagger.tags=["User"]
+  //#swagger.summary="Get all users"
   try {
     const users = await User.find({});
     res.json(users);
@@ -19,6 +20,8 @@ router.get('/', authMiddleware, roleMiddleware('admin'), async (req, res) => {
 });
 
 router.post('/', userValidationRules, validate,  async(req, res) => {
+  //#swagger.tags=["User"]
+  //#swagger.summary="Create a new user"
       try {
     const { email, password, role } = req.body;
 
@@ -60,6 +63,8 @@ router.post('/', userValidationRules, validate,  async(req, res) => {
 });
 
 router.put('/:id', authMiddleware, userValidationRules, validate, async (req, res) => {
+  //#swagger.tags=["User"]
+  //#swagger.summary="Update a user by ID"
     try {
         const { id } = req.params;
         const { email, password, role } = req.body;
@@ -113,8 +118,9 @@ router.put('/:id', authMiddleware, userValidationRules, validate, async (req, re
     }
 });
 
-
 router.delete('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => {
+  //#swagger.tags=["User"]
+  //#swagger.summary="Delete a user by ID"
     try {
         const { id } = req.params;
 
@@ -140,7 +146,5 @@ router.delete('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) 
         res.status(500).json({ error: 'Server error deleting user' });
     }
 });
-
-
 
 module.exports = router;
