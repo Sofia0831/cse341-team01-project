@@ -6,6 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "yoursecretkey";
 
 exports.signup = async (req, res) => {
   //#swagger.tags=["Authentication"]
+  //#swagger.summary="Register new user"
   const { email, password, role } = req.body;
 
   try {
@@ -30,6 +31,7 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   //#swagger.tags=["Authentication"]
+  //#swagger.summary="Login and receive a JWT token"
   const { email, password } = req.body;
 
   try {
@@ -49,4 +51,26 @@ exports.login = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Login failed" });
   }
+};
+
+exports.refresh = async (req, res) => {
+  //#swagger.tags=["Authentication"]
+  //#swagger.summary="Refresh and receive a new JWT token"
+  try {
+    const oldToken = req.headers.authorization?.split(" ")[1];
+    if (!oldToken) return res.status(401).json({ error: "No token provided" });
+
+    const decoded = jwt.verify(oldToken, JWT_SECRET);
+    const newToken = jwt.sign({ userId: decoded.userId, role: decoded.role }, JWT_SECRET, { expiresIn: "1h" });
+
+    res.status(200).json({ token: newToken });
+  } catch (err) {
+    res.status(401).json({ error: "Token refresh failed" });
+  }
+};
+
+exports.logout = async (req, res) => {
+  //#swagger.tags=["Authentication"]
+  //#swagger.summary="Logout user (client should discard token)"
+  res.status(200).json({ message: "Logged out successfully (client must discard token)" });
 };
