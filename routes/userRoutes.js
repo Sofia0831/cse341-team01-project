@@ -19,48 +19,6 @@ router.get('/', authMiddleware, roleMiddleware('admin'), async (req, res) => {
   }
 });
 
-router.post('/', userValidationRules, validate,  async(req, res) => {
-  //#swagger.tags=["User"]
-  //#swagger.summary="Create a new user"
-      try {
-    const { email, password, role } = req.body;
-
-    // Check if user with this email already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      // Return a conflict error if the user exists
-      return res.status(409).json({ message: 'User with that email already exists' });
-    }
-
-    // Hash the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create a new User instance
-    const newUser = new User({
-      email,
-      password: hashedPassword,
-      role
-    });
-
-    // Save the new user to the database
-    await newUser.save();
-
-    // Respond with success
-    res.status(201).json({ 
-      message: 'User created successfully',
-      user: {
-        id: newUser._id,
-        email: newUser.email,
-        role: newUser.role
-      }
-    });
-
-  } catch (err) {
-    console.error('Error creating user:', err);
-    res.status(500).json({ error: "Server error creating user" });
-  }
-});
 
 router.put('/:id', authMiddleware, userValidationRules, validate, async (req, res) => {
   //#swagger.tags=["User"]
