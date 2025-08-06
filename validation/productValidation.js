@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 
 const prodValidationRules = [
     body('name')
@@ -20,4 +20,24 @@ const prodValidationRules = [
 
 ];
 
-module.exports = {prodValidationRules};
+// Middleware to handle validation results
+const validate = (req, res, next) => {
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+        return next(); // Validation passed, proceed to the next middleware/route handler
+    }
+    
+    // Validation failed, extract and format errors
+    const extractedErrors = [];
+    errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }));
+    
+    // Send a 422 Unprocessable Entity response with the validation errors
+    return res.status(422).json({ 
+        errors: extractedErrors,
+    });
+};
+
+module.exports = {
+    prodValidationRules,
+    validate
+};
