@@ -3,24 +3,41 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 
-const { userValidationRules, validate } = require('../middleware/validate');
+const { userValidationRules, validate } = require('../validation/userValidation');
 
 const authMiddleware = require('../middleware/authMiddleware');
-const roleMiddleware = require('../middleware/roleMiddleware');
 
-router.get('/', authMiddleware, roleMiddleware('admin'), async (req, res) => {
+
+router.get('/', authMiddleware('admin'), async (req, res) => {
   //#swagger.tags=["User"]
   //#swagger.summary="Get all users"
   try {
-    const users = await User.find({});
+    const users = await User.find().select('-password');
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: "Server error fetching users" });
   }
 });
 
+router.get('/me', authMiddleware(), async(req, res) => {
+    //#swagger.tags=["User"]
+    //#swagger.summary="Get user details of currently logged in user"
+    try {
+    const user = await User.findById(req.user.userId).select('-password');
 
-router.put('/:id', authMiddleware, userValidationRules, validate, async (req, res) => {
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.error('Error fetching user profile:', err);
+    res.status(500).json({ error: 'Server error fetching user profile.' });
+  }
+});
+
+
+router.put('/:id', authMiddleware(), userValidationRules, validate, async (req, res) => {
   //#swagger.tags=["User"]
   //#swagger.summary="Update a user by ID"
     try {
@@ -76,7 +93,7 @@ router.put('/:id', authMiddleware, userValidationRules, validate, async (req, re
     }
 });
 
-router.delete('/:id', authMiddleware, roleMiddleware('admin'), async (req, res) => {
+router.delete('/:id', authMiddleware('admin'), async (req, res) => {
   //#swagger.tags=["User"]
   //#swagger.summary="Delete a user by ID"
     try {
