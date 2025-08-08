@@ -10,7 +10,9 @@ router.get('/', authMiddleware('admin'), userController.getAllUsers);
 
 router.get('/me', authMiddleware(), userController.getMe);
 
-router.put('/:id', authMiddleware(), userValidationRules, validate, userController.updateUser);
+router.put('/:id', authMiddleware('admin'), userValidationRules, validate, userController.updateUser);
+
+router.put('/me/:id', authMiddleware('customer'), userValidationRules, validate, userController.updateDetails);
 
 router.delete('/:id', authMiddleware('admin'), userController.deleteUser);
 

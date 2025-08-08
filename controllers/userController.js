@@ -33,21 +33,11 @@ const getMe = async(req, res) => {
 
 const updateUser = async (req, res) => {
   //#swagger.tags=["User"]
-  //#swagger.summary="Update a user by ID"
+  //#swagger.summary="Update a user by ID (admin)"
     try {
         const { id } = req.params;
         const { email, password, role } = req.body;
 
-        // A user can only update their own account unless they are an admin.
-        if (req.user.id !== id && req.user.role !== 'admin') {
-            return res.status(403).json({ message: 'Forbidden: You can only update your own account' });
-        }
-
-
-        // If a 'role' is provided in the body, only an admin is allowed to make this change.
-        if (role && req.user.role !== 'admin') {
-             return res.status(403).json({ message: 'Forbidden: Only admins can change a user\'s role' });
-        }
 
         const updateFields = { email };
 
@@ -57,10 +47,6 @@ const updateUser = async (req, res) => {
             updateFields.password = await bcrypt.hash(password, salt);
         }
         
-        // Only allow a role update if the user is an admin and the role is provided
-        if (role && req.user.role === 'admin') {
-            updateFields.role = role;
-        }
 
         const updatedUser = await User.findByIdAndUpdate(
             id,
@@ -86,6 +72,50 @@ const updateUser = async (req, res) => {
         res.status(500).json({ error: 'Server error updating user' });
     }
 };
+
+
+const updateDetails = async (req, res) => {
+  //#swagger.tags=["User"]
+  //#swagger.summary="Update a user by ID (customer)"
+    try {
+        const { id } = req.params;
+        const { email, password } = req.body;
+
+        // A user can only update their own account unless they are an admin.
+
+        const updateFields = { email };
+
+        // Hash the new password
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            updateFields.password = await bcrypt.hash(password, salt);
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            { $set: updateFields },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Respond with the updated user data
+        res.status(200).json({
+            message: 'User updated successfully',
+            user: {
+                id: updatedUser._id,
+                email: updatedUser.email,
+            }
+        });
+    } catch (err) {
+        console.error('Error updating user:', err);
+        res.status(500).json({ error: 'Server error updating user' });
+    }
+};
+
+
 
 const deleteUser = async (req, res) => {
   //#swagger.tags=["User"]
@@ -120,5 +150,6 @@ module.exports = {
     getAllUsers,
     getMe,
     updateUser,
+    updateDetails,
     deleteUser
 };
