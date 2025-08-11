@@ -13,6 +13,18 @@ const userValidationRules = [
     .isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
 ];
 
+const userDetailsRules = [
+  body('firstName')
+    .notEmpty().withMessage('First name is required')
+    .isAlpha().withMessage('First name must contain only letters'),
+  
+  body('lastName')
+    .notEmpty().withMessage('Last name is required')
+    .isAlpha().withMessage('Last name must contain only letters'),
+  body('userName')
+    .notEmpty().withMessage('userName required')
+]
+
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
@@ -30,5 +42,6 @@ const validate = (req, res, next) => {
 
 module.exports = {
   userValidationRules,
+  userDetailsRules,
   validate
 };
