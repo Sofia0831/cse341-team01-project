@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET || "yoursecretkey";
 
 exports.signup = async (req, res) => {
-  const { email, password, role } = req.body;
+  const { email, password, role, firstName, lastName, userName, address, number } = req.body;
 
   try {
     const existing = await User.findOne({ email });
@@ -17,7 +17,12 @@ exports.signup = async (req, res) => {
       email,
       password: hashedPassword,
       role: "customer",
-    });
+      firstName,
+      lastName,
+      userName,
+      address,
+      number
+    })
 
     await user.save();
 
@@ -28,16 +33,21 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { loginDetail, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({
+        $or: [
+            { email: loginDetail },
+            { userName: loginDetail }
+        ]
+    });
     console.log('User document found for login:', user); 
 
-    if (!user) return res.status(401).json({ error: "Invalid email or password" });
+    if (!user) return res.status(401).json({ error: "Invalid login credentials" });
 
     const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return res.status(401).json({ error: "Invalid email or password" });
+    if (!valid) return res.status(401).json({ error: "Invalid login credentials" });
 
     const token = jwt.sign(
       { userId: user._id, role: user.role },
