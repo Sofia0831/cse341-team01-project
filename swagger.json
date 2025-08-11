@@ -189,6 +189,33 @@
             "name": "Authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Product information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Example Product"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 19.99
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Electronics"
+                },
+                "stock": {
+                  "type": "number",
+                  "example": 100
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -203,6 +230,9 @@
           },
           "403": {
             "description": "Forbidden"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         }
       }
@@ -225,6 +255,33 @@
             "name": "Authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Product information to update.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Product Name"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 29.99
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Gadgets"
+                },
+                "stock": {
+                  "type": "number",
+                  "example": 50
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -239,6 +296,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         }
       },
@@ -305,6 +365,40 @@
             "description": "Internal Server Error"
           }
         }
+
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user details of currently logged in user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/users/{id}": {
@@ -312,7 +406,7 @@
         "tags": [
           "User"
         ],
-        "summary": "Update a user by ID",
+        "summary": "Update a user by ID (admin)",
         "description": "",
         "parameters": [
           {
@@ -397,6 +491,63 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/me/{id}": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a user by ID (customer)",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"

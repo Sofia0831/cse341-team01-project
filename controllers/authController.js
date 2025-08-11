@@ -32,6 +32,8 @@ exports.login = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
+    console.log('User document found for login:', user); 
+
     if (!user) return res.status(401).json({ error: "Invalid email or password" });
 
     const valid = await bcrypt.compare(password, user.password);
