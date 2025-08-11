@@ -365,7 +365,6 @@
             "description": "Internal Server Error"
           }
         }
-
       }
     },
     "/users/me": {
