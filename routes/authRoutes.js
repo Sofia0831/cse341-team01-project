@@ -26,6 +26,8 @@ router.post("/login", loginValidator, (req, res, next) => {
 router.post("/refresh", authController.refresh);
 
 router.post("/logout", authMiddleware(), (req, res) => {
+  //#swagger.tags=["Authentication"]
+  //#swagger.summary="Logout user (client should discard token)"
   res.status(200).json({ message: "Logged out successfully (client must discard token)" });
 });
 

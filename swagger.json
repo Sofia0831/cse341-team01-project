@@ -145,6 +145,10 @@
     },
     "/auth/logout": {
       "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout user (client should discard token)",
         "description": "",
         "parameters": [
           {
