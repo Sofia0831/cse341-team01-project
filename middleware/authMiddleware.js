@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (requiredRole = null) => {
   return (req, res, next) => {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
+    const token = req.header("Authorization")?.replace("Bearer ", "");
     if (!token) {
       return res.status(401).json({ error: "Access denied. No token provided." });
     }
@@ -17,7 +17,7 @@ module.exports = (requiredRole = null) => {
 
       next();
     } catch (err) {
-      res.status(401).json({ error: "Invalid or expired token." });
+      return res.status(401).json({ error: "Invalid or expired token." });
     }
   };
 };

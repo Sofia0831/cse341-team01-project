@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 
 router.use("/auth", require("./authRoutes"));
 router.use("/products", require("./productRoutes"));
-router.use("/users", require("./userRoutes"))
+router.use("/users", require("./userRoutes"));
+router.use("/cart", require("./cartRoutes"));
 
 module.exports = router;

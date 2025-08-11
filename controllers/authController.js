@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET || "yoursecretkey";
 
 exports.signup = async (req, res) => {
+  //#swagger.tags=["Authentication"]
+  //#swagger.summary="Register new user"
   const { email, password, role } = req.body;
 
   try {
@@ -28,6 +30,8 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  //#swagger.tags=["Authentication"]
+  //#swagger.summary="Login and receive a JWT token"
   const { email, password } = req.body;
 
   try {
@@ -68,5 +72,7 @@ exports.refresh = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
+    //#swagger.tags=["Authentication"]
+    //#swagger.summary="Logout user (client should discard token)"
   res.status(200).json({ message: "Logged out successfully (client must discard token)" });
 };
