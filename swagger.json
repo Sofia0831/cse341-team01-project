@@ -46,6 +46,21 @@
                 },
                 "role": {
                   "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "userName": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                },
+                "number": {
+                  "example": "any"
                 }
               }
             }
@@ -78,7 +93,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "email": {
+                "loginDetail": {
                   "example": "any"
                 },
                 "password": {
@@ -526,6 +541,21 @@
                   "example": "any"
                 },
                 "password": {
+                  "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "userName": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                },
+                "number": {
                   "example": "any"
                 }
               }
