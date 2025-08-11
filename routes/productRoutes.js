@@ -5,12 +5,8 @@ const authMiddleware = require('../middleware/authMiddleware');
 const { prodValidationRules, validate } = require('../validation/productValidation');
 
 router.get('/', productController.getAll);
-
-// Add POST/PUT/DELETE endpoints with admin checks
 router.post('/', authMiddleware('admin'), prodValidationRules, validate, productController.createProduct);
-
 router.put('/:id', authMiddleware('admin'), prodValidationRules, validate, productController.updateProduct);
-
 router.delete('/:id', authMiddleware('admin'), productController.deleteProduct);
 
 

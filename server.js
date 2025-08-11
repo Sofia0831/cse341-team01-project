@@ -3,9 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 
-// const authRoutes = require('./routes/authRoutes');
-// const productRoutes = require('./routes/productRoutes');
-// const userRoutes = require('./routes/userRoutes');
 const mainRoutes = require('./routes/index');
 
 const swaggerSpec = require('./config/swagger');
@@ -23,10 +20,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 // Routes
-// app.use('/auth', authRoutes);
-// app.use('/products', productRoutes);
-// app.use('/users', userRoutes);
-app.use('/', mainRoutes); // optional if your app needs it
+app.use('/', mainRoutes);
 
 // Centralized Error Handler
 app.use((err, req, res, next) => {
