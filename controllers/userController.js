@@ -39,7 +39,7 @@ const updateUser = async (req, res) => {
         const { email, password, role } = req.body;
 
 
-        const updateFields = { email };
+        const updateFields = { email, role };
 
         // Hash the new password
         if (password) {
@@ -79,11 +79,9 @@ const updateDetails = async (req, res) => {
   //#swagger.summary="Update a user by ID (customer)"
     try {
         const { id } = req.params;
-        const { email, password } = req.body;
+        const { email, password, firstName, lastName, userName, address, number } = req.body;
 
-        // A user can only update their own account unless they are an admin.
-
-        const updateFields = { email };
+        const updateFields = { email, firstName, lastName, userName, address, number };
 
         // Hash the new password
         if (password) {
