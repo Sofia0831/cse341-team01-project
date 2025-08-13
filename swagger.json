@@ -1,21 +1,39 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "E-Commerce Backend API",
-    "description": "An API to perform CRUD operations to an E-Commerce MongoDB database.",
+    "title": "E-Commerce API",
+    "description": "API for managing e-commerce operations",
     "version": "1.0.0"
   },
-  "host": "cse341-team01-project.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
+    "http",
     "https"
   ],
+  "securityDefinitions": {
+    "BearerAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
   "paths": {
     "/": {
       "get": {
-        "tags": [
-          "Test"
-        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/json": {
+      "get": {
         "description": "",
         "responses": {
           "200": {
