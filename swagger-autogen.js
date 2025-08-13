@@ -6,8 +6,10 @@ const doc = {
     description: 'API for managing e-commerce operations',
     version: '1.0.0'
   },
-  host: process.env.SWAGGER_HOST || 'localhost:3000',
-  schemes: ['http', 'https'],
+  // host: 'localhost:3000',
+  host: "cse341-team01-project.onrender.com/",
+  // schemes: ['http', 'https'],
+  schemes: ['https'],
   securityDefinitions: {
     BearerAuth: {
       type: 'apiKey',

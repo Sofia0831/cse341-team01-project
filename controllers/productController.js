@@ -2,7 +2,7 @@ const Product = require('../models/Product');
 
 const getAll = async (req, res) => {
   //#swagger.tags=["Products"]
-  //#swagger.summary="Get all products"
+  //#swagger.summary="Get all products (no auth req)"
   try {
     const { category } = req.query;
     const filter = category ? { category } : {};
@@ -16,7 +16,7 @@ const getAll = async (req, res) => {
 // Add POST/PUT/DELETE endpoints with admin checks
 const createProduct = async (req, res) => { 
   //#swagger.tags=["Products"]
-  //#swagger.summary="Create a new product"
+  //#swagger.summary="Create a new product (admin)"
   /* #swagger.parameters['body'] = {
         in: 'body',
         description: 'Product information.',
@@ -39,7 +39,7 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   //#swagger.tags=["Products"]
-  //#swagger.summary="Update a product by ID"
+  //#swagger.summary="Update a product by ID (admin)"
   /* #swagger.parameters['body'] = {
             in: 'body',
             description: 'Product information to update.',
@@ -61,7 +61,7 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   //#swagger.tags=["Products"]
-  //#swagger.summary="Delete a product by ID"
+  //#swagger.summary="Delete a product by ID (admin)"
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.status(204).send();

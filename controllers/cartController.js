@@ -3,7 +3,7 @@ const Product = require('../models/Product');
 
 exports.getCart = async (req, res) => {
     //#swagger.tags=["Cart"]
-    //#swagger.summary="Get all items in cart"
+    //#swagger.summary="Get all items in cart (customer)"
   try {
     let cart = await Cart.findOne({ user: req.user.userId }).populate('items.product');
     if (!cart) {
@@ -17,7 +17,7 @@ exports.getCart = async (req, res) => {
 
 exports.addItem = async (req, res) => {
     //#swagger.tags=["Cart"]
-    //#swagger.summary="Add an item to the cart"
+    //#swagger.summary="Add an item to the cart (customer)"
   try {
     const { productId, quantity } = req.body;
     const numQuantity = Number(quantity);
@@ -63,7 +63,7 @@ exports.addItem = async (req, res) => {
 
 exports.updateItem = async (req, res) => {
     //#swagger.tags=["Cart"]
-    //#swagger.summary="Update item quantity in cart"
+    //#swagger.summary="Update item quantity in cart (customer)"
   try {
     const { quantity } = req.body;
     const numQuantity = Number(quantity);
@@ -108,7 +108,7 @@ exports.updateItem = async (req, res) => {
 
 exports.removeItem = async (req, res) => {
     //#swagger.tags=["Cart"]
-    //#swagger.summary="Remove an item from the cart"
+    //#swagger.summary="Remove an item from the cart (customer)"
   try {
     const cart = await Cart.findOne({ user: req.user.userId });
     if (!cart) return res.status(404).json({ message: 'Cart not found' });
@@ -129,7 +129,7 @@ exports.removeItem = async (req, res) => {
 
 exports.clearCart = async (req, res) => {
     //#swagger.tags=["Cart"]
-    //#swagger.summary="Clear all items in cart"
+    //#swagger.summary="Clear all items in cart (customer)"
   try {
     const cart = await Cart.findOne({ user: req.user.userId });
     if (!cart) return res.status(404).json({ message: 'Cart not found' });
