@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "yoursecretkey";
 exports.signup = async (req, res) => {
   //#swagger.tags=["Authentication"]
   //#swagger.summary="Register new user"
-  const { email, password, role, firstName, lastName, userName, address, number } = req.body;
+  const { email, password, firstName, lastName, userName, address, number } = req.body;
 
   try {
     const existing = await User.findOne({ email });
