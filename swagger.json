@@ -5,10 +5,9 @@
     "description": "API for managing e-commerce operations",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "cse341-team01-project.onrender.com/",
   "basePath": "/",
   "schemes": [
-    "http",
     "https"
   ],
   "securityDefinitions": {
@@ -21,11 +20,24 @@
   "paths": {
     "/": {
       "get": {
+        "tags": [
+          "Test"
+        ],
         "description": "",
         "responses": {
           "200": {
             "description": "OK"
-          },
+          }
+        }
+      }
+    },
+    "/api-docs": {
+      "get": {
+        "tags": [
+          "Test"
+        ],
+        "description": "",
+        "responses": {
           "default": {
             "description": ""
           }
@@ -34,6 +46,9 @@
     },
     "/json": {
       "get": {
+        "tags": [
+          "Test"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -190,7 +205,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Get all products",
+        "summary": "Get all products (no auth req)",
         "description": "",
         "parameters": [
           {
@@ -212,7 +227,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Create a new product",
+        "summary": "Create a new product (admin)",
         "description": "",
         "parameters": [
           {
@@ -272,7 +287,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Update a product by ID",
+        "summary": "Update a product by ID (admin)",
         "description": "",
         "parameters": [
           {
@@ -336,7 +351,7 @@
         "tags": [
           "Products"
         ],
-        "summary": "Delete a product by ID",
+        "summary": "Delete a product by ID (admin)",
         "description": "",
         "parameters": [
           {
@@ -372,7 +387,7 @@
         "tags": [
           "User"
         ],
-        "summary": "Get all users",
+        "summary": "Get all users (no auth req)",
         "description": "",
         "parameters": [
           {
@@ -402,7 +417,7 @@
         "tags": [
           "User"
         ],
-        "summary": "Get user details of currently logged in user",
+        "summary": "Get user details of currently logged in user (user)",
         "description": "",
         "parameters": [
           {
@@ -493,7 +508,7 @@
         "tags": [
           "User"
         ],
-        "summary": "Delete a user by ID",
+        "summary": "Delete a user by ID (user)",
         "description": "",
         "parameters": [
           {
@@ -604,7 +619,7 @@
         "tags": [
           "Cart"
         ],
-        "summary": "Get all items in cart",
+        "summary": "Get all items in cart (customer)",
         "description": "",
         "parameters": [
           {
@@ -634,7 +649,7 @@
         "tags": [
           "Cart"
         ],
-        "summary": "Add an item to the cart",
+        "summary": "Add an item to the cart (customer)",
         "description": "",
         "parameters": [
           {
@@ -685,7 +700,7 @@
         "tags": [
           "Cart"
         ],
-        "summary": "Update item quantity in cart",
+        "summary": "Update item quantity in cart (customer)",
         "description": "",
         "parameters": [
           {
@@ -737,7 +752,7 @@
         "tags": [
           "Cart"
         ],
-        "summary": "Remove an item from the cart",
+        "summary": "Remove an item from the cart (customer)",
         "description": "",
         "parameters": [
           {
@@ -776,7 +791,7 @@
         "tags": [
           "Cart"
         ],
-        "summary": "Clear all items in cart",
+        "summary": "Clear all items in cart (customer)",
         "description": "",
         "parameters": [
           {
@@ -809,7 +824,7 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Create an order from cart items",
+        "summary": "Create an order from cart items (customer)",
         "description": "",
         "parameters": [
           {
@@ -857,7 +872,7 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Get orders for the current user",
+        "summary": "Get orders for the current user (customer)",
         "description": "",
         "parameters": [
           {
@@ -887,7 +902,7 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Get all orders (admin only)",
+        "summary": "Get all orders (admin)",
         "description": "",
         "parameters": [
           {
@@ -917,7 +932,7 @@
         "tags": [
           "Orders"
         ],
-        "summary": "Update order status (admin only)",
+        "summary": "Update order status (admin)",
         "description": "",
         "parameters": [
           {
@@ -947,6 +962,51 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "delete": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Delete an order (customer)",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "401": {
             "description": "Unauthorized"

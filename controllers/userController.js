@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const getAllUsers = async (req, res) => {
   //#swagger.tags=["User"]
-  //#swagger.summary="Get all users"
+  //#swagger.summary="Get all users (no auth req)"
   try {
     const users = await User.find().select('-password');
     res.json(users);
@@ -16,7 +16,7 @@ const getAllUsers = async (req, res) => {
 
 const getMe = async(req, res) => {
     //#swagger.tags=["User"]
-    //#swagger.summary="Get user details of currently logged in user"
+    //#swagger.summary="Get user details of currently logged in user (user)"
     try {
     const user = await User.findById(req.user.userId).select('-password');
 
@@ -117,7 +117,7 @@ const updateDetails = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   //#swagger.tags=["User"]
-  //#swagger.summary="Delete a user by ID"
+  //#swagger.summary="Delete a user by ID (user)"
     try {
         const { id } = req.params;
 
