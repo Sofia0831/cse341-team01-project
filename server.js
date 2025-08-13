@@ -12,10 +12,10 @@ app.use(cors());
 app.use(express.json());
 
 // Request Logger (temporary for debugging)
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
-  next();
-});
+//app.use((req, res, next) => {
+  //console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
+ // next();
+//});
 
 // Routes
 const mainRoutes = require('./routes/index');
