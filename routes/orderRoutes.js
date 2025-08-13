@@ -149,4 +149,6 @@ router.get('/all', authMiddleware('admin'), orderController.getAllOrders);
  */
 router.put('/:id/status', authMiddleware('admin'), orderController.updateOrderStatus);
 
+router.delete("/:id", authMiddleware("customer"), orderController.deleteOrder);
+
 module.exports = router;
