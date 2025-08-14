@@ -19,6 +19,7 @@ app.use(express.json());
 
 // Routes
 const mainRoutes = require('./routes/index');
+const { Server } = require('http');
 app.use('/', mainRoutes);
 
 // Swagger Documentation (development only)

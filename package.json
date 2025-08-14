@@ -42,8 +42,10 @@
   },
   "devDependencies": {
     "jest": "^30.0.5",
+    "mongodb-memory-server": "^10.2.0",
     "nodemon": "^3.1.10",
     "supertest": "^7.1.4",
-    "swagger-autogen": "^2.23.7"
+    "swagger-autogen": "^2.23.7",
+    "tslib": "^2.8.1"
   }
 }

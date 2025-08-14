@@ -1,6 +1,5 @@
 const request = require('supertest');
-const mongoose = require('mongoose');
-const { app } = require('../server'); 
+const { app } = require('../server');
 const Product = require('../models/Product');
 
 describe('Product GET All Endpoint', () => {
@@ -9,18 +8,6 @@ describe('Product GET All Endpoint', () => {
         { name: 'Headphones', category: 'electronics', price: 150, stock: 12 },
         { name: 'Book', category: 'books', price: 15, stock: 30 },
     ];
-
-    beforeAll(async () => {
-        const mongoDbUrl = process.env.MONGO_TEST_URI || 'mongodb://localhost:27017/testdb';
-        await mongoose.disconnect();
-        await mongoose.connect(mongoDbUrl);
-        console.log('Connected to test database.');
-    });
-
-    afterAll(async () => {
-        await mongoose.connection.close();
-        console.log('Disconnected from test database.');
-    });
 
     beforeEach(async () => {
         await Product.deleteMany({});
