@@ -7,7 +7,7 @@ const doc = {
     version: '1.0.0'
   },
   // host: 'localhost:3000',
-  host: "cse341-team01-project.onrender.com/",
+  host: "cse341-team01-project.onrender.com",
   // schemes: ['http', 'https'],
   schemes: ['https'],
   securityDefinitions: {
