@@ -387,7 +387,7 @@
         "tags": [
           "User"
         ],
-        "summary": "Get all users (no auth req)",
+        "summary": "Get all users (admin)",
         "description": "",
         "parameters": [
           {

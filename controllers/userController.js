@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const getAllUsers = async (req, res) => {
   //#swagger.tags=["User"]
-  //#swagger.summary="Get all users (no auth req)"
+  //#swagger.summary="Get all users (admin)"
   try {
     const users = await User.find().select('-password');
     res.json(users);
